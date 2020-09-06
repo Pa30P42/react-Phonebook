@@ -1,9 +1,5 @@
-const registerRequest = createAction("auth/REGISTERREQUEST");
-const registerSuccess = createAction("auth/REGISTERSUCCESS");
-const registerError = createAction("auth/REGISTERERROR");
+const isAuthorized = (state) => state.auth.token;
 
-export default {
-  registerRequest,
-  registerSuccess,
-  registerError,
-};
+const getUserName = (state) => state.auth.user.email;
+
+export default { isAuthorized, getUserName };

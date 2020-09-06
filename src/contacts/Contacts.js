@@ -4,8 +4,13 @@ import styles from "./Contact.module.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import contactsSelectors from "../redux/contactsSelectors";
+import contactsOperations from "../redux/contactsOperations";
 
 class Contacts extends Component {
+  componentDidMount() {
+    this.props.getContacts();
+  }
+
   render() {
     return (
       <>
@@ -36,4 +41,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Contacts);
+const mapDispatchToProps = {
+  getContacts: contactsOperations.fetchContacts,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

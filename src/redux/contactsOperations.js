@@ -2,11 +2,13 @@ import axios from "axios";
 
 const { default: actions } = require("./actions");
 
+axios.defaults.baseURL = "https://goit-phonebook-api.herokuapp.com/";
+
 const addContact = (contact) => (dispatch) => {
   dispatch(actions.addContactRequest());
 
   axios
-    .post("http://localhost:4040/contacts", { ...contact })
+    .post("/contacts", { ...contact })
     .then((response) => {
       dispatch(actions.addContactSuccess(response.data));
     })
@@ -17,7 +19,7 @@ const fetchContacts = () => (dispatch) => {
   dispatch(actions.fetchContactRequest());
 
   axios
-    .get("http://localhost:4040/contacts")
+    .get("/contacts")
     .then(({ data }) => {
       dispatch(actions.fetchContactSuccess(data));
     })
@@ -29,14 +31,14 @@ const fetchContacts = () => (dispatch) => {
 const removeContact = (id) => (dispatch) => {
   dispatch(actions.fetchContactRequest());
   axios
-    .delete(`http://localhost:4040/contacts/${id}`)
+    .delete(`contacts/${id}`)
     .then(() => dispatch(actions.removeContactSuccess(id)))
     .catch((error) => dispatch(actions.removeContactSuccess(error)));
 };
 const editContact = ({ name, number, id }) => (dispatch) => {
   dispatch(actions.editContactRequest());
   axios
-    .patch(`http://localhost:4040/contacts/${id}`, { name, number })
+    .patch(`/contacts/${id}`, { name, number })
     .then(({ data }) => dispatch(actions.editContactSuccess(data)))
     .catch((error) => dispatch(actions.editContactError(error)));
 };

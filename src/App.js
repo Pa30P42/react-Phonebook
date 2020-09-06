@@ -3,8 +3,13 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import routes from "./routes";
 import Layout from "./Components/Layout";
+import authOperations from "./redux/authRedux/authOperations";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.getUser();
+  }
+
   render() {
     return (
       <>
@@ -32,12 +37,8 @@ class App extends Component {
 //   };
 // };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addContact: (contact) => dispatch(contactActions.onAddContact(contact)),
-//     switchAlert: () => dispatch(contactActions.switchAlert()),
-//     fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-//   };
-// };
+const mapDispatchToProps = {
+  getUser: authOperations.getCurrentUser(),
+};
 
-export default connect()(App);
+export default connect(null, mapDispatchToProps)(App);
