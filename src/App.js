@@ -4,10 +4,15 @@ import { connect } from "react-redux";
 import routes from "./routes";
 import Layout from "./Components/Layout";
 import authOperations from "./redux/authRedux/authOperations";
+import authSelectors from "./redux/authRedux/authSelectors";
 
 class App extends Component {
   componentDidMount() {
-    this.props.getUser();
+    if (this.props.isAuthorized) {
+      console.log(this.props.isAuthorized);
+      authOperations.token.set(this.props.isAuthorized);
+      this.props.getUser();
+    }
   }
 
   render() {
@@ -36,9 +41,12 @@ class App extends Component {
 //     isLoading: contactsSelectors.getLoading(state),
 //   };
 // };
+const mapStateToProps = (state) => ({
+  isAuthorized: authSelectors.isAuthorized(state),
+});
 
 const mapDispatchToProps = {
-  getUser: authOperations.getCurrentUser(),
+  getUser: authOperations.getCurrentUser,
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

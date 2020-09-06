@@ -27,7 +27,7 @@ const UserMenu = ({ email, logoutUser }) => (
 );
 
 const mapStateToProps = (state) => ({
-  email: authSelectors.getUserName(state),
+  email: authSelectors.getUserEmail(state),
 });
 
 const mapDispatchToProps = (dispatch) => {

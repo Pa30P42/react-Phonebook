@@ -57,9 +57,9 @@ const getCurrentUser = () => (dispatch) => {
     .get("users/current")
     .then((res) => {
       console.log(res);
-      dispatch(authActions.getUserSuccess());
+      dispatch(authActions.getUserSuccess(res.data));
     })
     .catch((error) => dispatch(authActions.getUserError(error)));
 };
 
-export default { registerUser, loginUser, logoutUser, getCurrentUser };
+export default { registerUser, loginUser, logoutUser, getCurrentUser, token };
