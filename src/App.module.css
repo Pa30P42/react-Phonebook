@@ -1,0 +1,25 @@
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  padding: 0;
+}
+.phonebookTitle {
+  font-size: 36px;
+  font-weight: 800;
+  color: palevioletred;
+}
+
+.appear {
+  transform: translateX(-100%);
+}
+.appearActive {
+  transform: translateX(0);
+  transition: all 500ms linear;
+}
+
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+}
