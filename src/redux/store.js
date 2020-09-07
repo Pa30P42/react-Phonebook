@@ -1,7 +1,16 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import contactsReducer from "./contactsReducer";
 import authReducers from "./authRedux/authReducers";
-import { persistStore, persistReducer } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 // import logger from "redux-logger";
 
@@ -24,7 +33,7 @@ const authPersistConfig = {
 
 //=====
 
-const defaultMiddleware = getDefaultMiddleware();
+// const defaultMiddleware = getDefaultMiddleware();
 
 export const store = configureStore({
   reducer: {
@@ -32,7 +41,11 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducers),
     // auth: authReducers,
   },
-  middleware: [...defaultMiddleware],
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 });
 
 export const persistor = persistStore(store);

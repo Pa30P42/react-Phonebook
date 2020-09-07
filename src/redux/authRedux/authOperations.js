@@ -43,7 +43,6 @@ const logoutUser = () => (dispatch) => {
   axios
     .post("users/logout")
     .then(() => {
-      console.log("hello");
       token.unset();
       dispatch(authActions.logoutSuccess());
     })
@@ -56,7 +55,6 @@ const getCurrentUser = () => (dispatch) => {
   axios
     .get("users/current")
     .then((res) => {
-      console.log(res);
       dispatch(authActions.getUserSuccess(res.data));
     })
     .catch((error) => dispatch(authActions.getUserError(error)));

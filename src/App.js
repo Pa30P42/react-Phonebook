@@ -1,15 +1,16 @@
 import React, { Component, Suspense } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import routes from "./routes";
 import Layout from "./Components/Layout";
 import authOperations from "./redux/authRedux/authOperations";
 import authSelectors from "./redux/authRedux/authSelectors";
+import PrivateRoute from "./hoc/PrivateRoute";
+import PublicRoute from "./hoc/PublicRoute";
 
 class App extends Component {
   componentDidMount() {
     if (this.props.isAuthorized) {
-      console.log(this.props.isAuthorized);
       authOperations.token.set(this.props.isAuthorized);
       this.props.getUser();
     }
@@ -22,9 +23,16 @@ class App extends Component {
           <Layout>
             <Suspense fallback={<h1>Loading...</h1>}>
               <Switch>
-                {routes.map((route) => (
+                {routes.map((route) =>
+                  route.private ? (
+                    <PrivateRoute key={route.label} {...route} />
+                  ) : (
+                    <PublicRoute key={route.label} {...route} />
+                  )
+                )}
+                {/* {routes.map((route) => (
                   <Route key={route.path} {...route} />
-                ))}
+                ))} */}
               </Switch>
             </Suspense>
           </Layout>
@@ -33,6 +41,16 @@ class App extends Component {
     );
   }
 }
+
+// <Switch>
+//   {routes.map((route) =>
+//     route.private ? (
+//       <PrivateRoute key={route.label} {...route} />
+//     ) : (
+//       <PublicRoute key={route.label} {...route} />
+//     )
+//   )}
+// </Switch>;
 
 // const mapStateToProps = (state) => {
 //   return {
